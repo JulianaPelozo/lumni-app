@@ -5,10 +5,6 @@ from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from models import db, User, DailyLog
 from auth import hash_password, verify_password, generate_token
 
-from dotenv import load_dotenv
-
-load_dotenv() 
-
 app = Flask(__name__)
 
 

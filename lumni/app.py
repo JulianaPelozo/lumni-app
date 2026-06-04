@@ -5,13 +5,20 @@ from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from models import db, User, DailyLog
 from auth import hash_password, verify_password, generate_token
 
+from dotenv import load_dotenv
+
+load_dotenv() 
+
 app = Flask(__name__)
 
 
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'lumni-secret-key-change-in-prod')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://postgres:postgres@localhost/lumni')
+from dotenv import load_dotenv
+load_dotenv()
+
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-fallback-key')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///lumni.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'jwt-lumni-key')
+app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'jwt-dev-fallback')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=7)
 
 db.init_app(app)

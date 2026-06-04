@@ -22,7 +22,7 @@ body {
 }
 
 .lunar-card {
-    background: rgba(20, 30, 55, 0.7);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(4px);
     border: 1px solid #4a5b8c;
     border-radius: 28px;
@@ -78,4 +78,19 @@ canvas {
     background: rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     padding: 10px;
+}
+
+body,
+.card-title,
+label,
+.form-label,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.small {
+    color: #ffffff !important;
 }

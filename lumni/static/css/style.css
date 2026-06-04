@@ -1,0 +1,44 @@
+body {
+    background: linear-gradient(145deg, #0b1120 0%, #19233c 100%);
+    color: #e0e4f0;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+}
+.lunar-navbar {
+    background: rgba(15, 25, 45, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #2d3e6e;
+}
+.navbar-brand {
+    color: #f0e6d0;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+.lunar-card {
+    background: rgba(20, 30, 55, 0.7);
+    backdrop-filter: blur(4px);
+    border: 1px solid #4a5b8c;
+    border-radius: 28px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+.lunar-hero {
+    padding: 3rem 1rem;
+    background: radial-gradient(circle at 10% 20%, rgba(70, 100, 150, 0.2), transparent);
+    border-radius: 48px;
+}
+.btn-primary {
+    background-color: #6c5ce7;
+    border-color: #5b4bc4;
+}
+.btn-outline-light {
+    border-color: #b8c7ff;
+    color: #cbd5ff;
+}
+.btn-outline-light:hover {
+    background-color: #6c5ce7;
+    border-color: #6c5ce7;
+}
+canvas {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    padding: 10px;
+}

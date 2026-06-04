@@ -3,6 +3,7 @@
 > *Registre seu humor, sono, energia e tarefas. Receba padrões de comportamento e alertas preventivos.*
 
 ---
+![Banner da Lumni](images/banner.png)
 
 ## 📌 Sobre o Projeto
 

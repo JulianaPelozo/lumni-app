@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
-db = SQLAlchemy()
+db = SQLAlchemy() 
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -17,8 +17,8 @@ class DailyLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     date = db.Column(db.Date, default=datetime.utcnow().date, nullable=False)
-    mood = db.Column(db.Integer)      # 1 = muito ruim, 5 = excelente
-    energy = db.Column(db.Integer)    # 1 = exausto, 5 = cheio de energia
+    mood = db.Column(db.Integer)
+    energy = db.Column(db.Integer)
     sleep_hours = db.Column(db.Float)
     tasks_done = db.Column(db.Integer)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

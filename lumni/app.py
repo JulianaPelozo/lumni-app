@@ -1,23 +1,23 @@
 import os
 from datetime import datetime, timedelta
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
-from models import db, User, DailyLog
+from dotenv import load_dotenv
+from models import db, User, DailyLog   
 from auth import hash_password, verify_password, generate_token
+
+load_dotenv()
 
 app = Flask(__name__)
 
 
-from dotenv import load_dotenv
-load_dotenv()
-
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-fallback-key')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///lumni.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'mysql+pymysql://root:root@localhost:3306/lumni_db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'jwt-dev-fallback')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
+app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'dev-jwt-key')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=7)
 
-db.init_app(app)
+db.init_app(app)          
 jwt = JWTManager(app)
 
 with app.app_context():
@@ -39,11 +39,13 @@ def register_page():
 def dashboard():
     return render_template('dashboard.html')
 
+
 @app.route('/api/register', methods=['POST'])
 def register():
     data = request.get_json()
     if not data or not data.get('username') or not data.get('email') or not data.get('password'):
         return jsonify({'msg': 'Campos obrigatórios faltando'}), 400
+    
     if User.query.filter_by(username=data['username']).first():
         return jsonify({'msg': 'Usuário já existe'}), 409
     if User.query.filter_by(email=data['email']).first():
@@ -68,6 +70,7 @@ def login():
     token = generate_token(user.id)
     return jsonify({'access_token': token, 'user': {'id': user.id, 'username': user.username}})
 
+
 @app.route('/api/daily-log', methods=['POST'])
 @jwt_required()
 def save_daily_log():
@@ -88,6 +91,7 @@ def save_daily_log():
     db.session.commit()
     return jsonify({'msg': 'Log salvo com sucesso'}), 200
 
+
 @app.route('/api/history', methods=['GET'])
 @jwt_required()
 def get_history():
@@ -104,12 +108,11 @@ def get_history():
             'date': log.date.isoformat(),
             'mood': log.mood,
             'energy': log.energy,
-            'sleep_hours': log.sleep_hours,
+            'sleep_hours': float(log.sleep_hours) if log.sleep_hours else None,
             'tasks_done': log.tasks_done
         })
     
     alerts = generate_alerts(logs)
-    
     return jsonify({'logs': data, 'alerts': alerts}), 200
 
 def generate_alerts(logs):
@@ -144,9 +147,9 @@ def generate_alerts(logs):
         alerts.append("Você se sente bem mesmo fazendo poucas tarefas? Isso é ótimo! Cuide para não se cobrar demais.")
     
     if not alerts:
-        alerts.append("Nenhum padrão crítico detectado. Continue registrando seu bem-estar!")
+        alerts.append("✨ Nenhum padrão crítico detectado. Continue registrando seu bem-estar!")
     
     return alerts
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))

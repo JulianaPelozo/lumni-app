@@ -1,6 +1,6 @@
 body {
     background: linear-gradient(145deg, #201d1d 0%, #19233c 100%);
-    color: #e0e4f0;
+    color: #ffffff;
     font-family: 'Segoe UI', 'Roboto', sans-serif;
     min-height: 100vh;
 }
@@ -80,17 +80,3 @@ canvas {
     padding: 10px;
 }
 
-body,
-.card-title,
-label,
-.form-label,
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.small {
-    color: #ffffff !important;
-}

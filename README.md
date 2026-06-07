@@ -1,26 +1,56 @@
 # 🌙 Lumni – Apoio Emocional para Universitários
 
+<p align="center">
+  <img src="images/banner.png" width="900">
+</p>
+
 > *Registre seu humor, sono, energia e tarefas. Receba padrões de comportamento e alertas preventivos.*
 
 ---
-![Banner da Lumni](images/banner.png)
 
-## 📌 Sobre o Projeto
+# 📌 Sobre o Projeto
 
 Lumni é uma aplicação web desenvolvida para ajudar estudantes universitários a identificar padrões emocionais e comportamentais.
-Através de registros diários, a ferramenta gera gráficos e insights personalizados, promovendo o autoconhecimento e o bem-estar.
 
-### Problema Resolvido
+Através de registros diários, a ferramenta gera gráficos e insights personalizados, promovendo autoconhecimento, equilíbrio emocional e bem-estar.
 
-Muitos estudantes sofrem com sobrecarga, procrastinação e isolamento, mas não conseguem perceber como o sono, a energia e a produtividade afetam seu humor ao longo do tempo.
+---
 
-### Solução
+## 🎯 Problema Resolvido
 
-Um diário emocional que oferece **alertas contextuais**, como:
+Muitos estudantes sofrem com:
 
-> “Você costuma ficar pior após 3 dias dormindo pouco.”
+* sobrecarga acadêmica
+* procrastinação
+* ansiedade
+* isolamento
+* privação de sono
 
-Além disso, a plataforma disponibiliza visualizações intuitivas dos dados em gráficos interativos.
+Porém, frequentemente não conseguem perceber como hábitos diários impactam diretamente seu humor e produtividade.
+
+---
+
+## 💡 Solução
+
+O Lumni funciona como um diário emocional inteligente.
+
+A aplicação permite registrar:
+
+* humor
+* energia
+* horas de sono
+* tarefas concluídas
+
+Com base nesses dados, o sistema gera:
+
+* gráficos interativos
+* históricos emocionais
+* alertas automáticos
+* padrões comportamentais
+
+Exemplo de insight:
+
+> “Você costuma apresentar piora no humor após vários dias dormindo pouco.”
 
 ---
 
@@ -39,34 +69,62 @@ Além disso, a plataforma disponibiliza visualizações intuitivas dos dados em 
 * Python 3.10+
 * Flask
 * Flask-JWT-Extended
+* SQLAlchemy
 
 ## Banco de Dados
 
-* PostgreSQL (produção)
+* MySQL
 * SQLite (desenvolvimento local)
+
+## Ferramentas
+
+* MySQL Workbench
+* Git
+* GitHub
 
 ## Cloud (Azure – planejado)
 
 * Azure App Service (Linux)
-* Azure Database for PostgreSQL
+* Azure Database for MySQL
 * GitHub Actions para CI/CD
 
 ---
 
 # 🧩 Funcionalidades
 
-* [x] Cadastro e login com autenticação JWT
+* [x] Cadastro de usuários
+* [x] Login com autenticação JWT
 * [x] Registro diário de:
 
   * Humor (1 a 5)
   * Energia (1 a 5)
   * Horas de sono
   * Tarefas concluídas
-* [x] Histórico emocional dos últimos 30 dias
+* [x] Histórico emocional
 * [x] Gráficos interativos
 * [x] Alertas automáticos baseados em padrões
-* [x] Interface responsiva
-* [x] Design com temática lunar e meditativa
+* [x] Dashboard responsivo
+* [x] Interface com temática lunar e meditativa
+
+---
+
+# 🖼️ Interface
+
+## Tela Inicial
+
+* Página de apresentação da plataforma
+* Acesso para login e cadastro
+
+## Dashboard
+
+* Registro emocional diário
+* Visualização de gráficos
+* Alertas inteligentes
+
+## Sistema de Autenticação
+
+* Cadastro de usuário
+* Login seguro utilizando JWT
 
 ---
 
@@ -76,7 +134,8 @@ Além disso, a plataforma disponibiliza visualizações intuitivas dos dados em 
 
 * Python 3.10+
 * Git
-* PostgreSQL (opcional)
+* MySQL Server
+* MySQL Workbench (opcional)
 
 ---
 
@@ -89,7 +148,7 @@ cd lumni
 
 ---
 
-## 2. Crie e ative um ambiente virtual
+## 2. Crie um ambiente virtual
 
 ### Linux/Mac
 
@@ -115,12 +174,12 @@ pip install -r requirements.txt
 
 ---
 
-## 4. Configure as variáveis de ambiente (opcional)
+## 4. Configure as variáveis de ambiente
 
 Crie um arquivo `.env` na raiz do projeto:
 
 ```env
-DATABASE_URL=postgresql://usuario:senha@localhost:5432/lumni
+DATABASE_URL=mysql+pymysql://usuario:senha@localhost:3306/lumni
 SECRET_KEY=sua-chave-secreta
 JWT_SECRET_KEY=sua-outra-chave-secreta
 ```
@@ -141,7 +200,11 @@ python app.py
 http://localhost:5000
 ```
 
-💡 Caso o PostgreSQL não esteja configurado, o sistema utilizará SQLite automaticamente.
+---
+
+## 💡 Observação
+
+Caso o MySQL não esteja configurado, o sistema pode utilizar SQLite para desenvolvimento local.
 
 ---
 
@@ -151,7 +214,7 @@ Este projeto foi desenvolvido como trabalho acadêmico e está preparado para im
 
 ---
 
-## Arquitetura Proposta
+# 🏗️ Arquitetura Proposta
 
 ```txt
 [Usuário]
@@ -162,20 +225,20 @@ Gunicorn
     ↓
 Flask App
     ↓
-Azure Database for PostgreSQL
+Azure Database for MySQL
 ```
 
 ---
 
-## Etapas para Deploy
+# 🚀 Etapas para Deploy
 
-### 1. Criar o Banco de Dados
+## 1. Criar o Banco de Dados
 
 Provisionar um:
 
-* Azure Database for PostgreSQL – Flexible Server
+* Azure Database for MySQL
 
-Criar o banco:
+Criar um banco chamado:
 
 ```txt
 lumni_db
@@ -183,7 +246,7 @@ lumni_db
 
 ---
 
-### 2. Criar o App Service
+## 2. Criar o App Service
 
 Configurações recomendadas:
 
@@ -193,32 +256,25 @@ Configurações recomendadas:
 
 ---
 
-### 3. Configurar Variáveis de Ambiente
+## 3. Configurar Variáveis de Ambiente
 
 Adicionar no Azure App Service:
 
 ```env
-AZURE_POSTGRESQL_CONNECTIONSTRING=sua-string
+DATABASE_URL=sua-string-de-conexao
 SECRET_KEY=sua-chave
 JWT_SECRET_KEY=sua-outra-chave
 ```
 
 ---
 
-### 4. Fazer o Deploy
+## 4. Fazer o Deploy
 
-Opções:
+Você pode utilizar:
 
 * GitHub Actions
 * Deploy manual via Git
-
----
-
-### 5. Acessar a aplicação
-
-```txt
-https://lumni-app.azurewebsites.net
-```
+* Integração direta do Azure com GitHub
 
 ---
 
@@ -239,11 +295,13 @@ lumni/
 │   ├── login.html
 │   ├── register.html
 │   └── dashboard.html
-└── static/
-    ├── css/
-    │   └── style.css
-    └── js/
-        └── script.js
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── script.js
+│   └── images/
+└── README.md
 ```
 
 ---
@@ -258,8 +316,17 @@ lumni/
    * energia
    * horas de sono
    * tarefas concluídas
-4. Visualize gráficos automáticos
-5. Receba insights e alertas personalizados
+4. Visualize os gráficos
+5. Receba insights automáticos
+
+---
+
+# 🔒 Segurança
+
+* Autenticação JWT
+* Senhas criptografadas
+* Controle de sessão
+* Proteção básica de rotas autenticadas
 
 ---
 
@@ -270,14 +337,20 @@ Este é um projeto acadêmico, mas sugestões são muito bem-vindas.
 Você pode:
 
 * abrir uma issue
-* enviar um pull request
 * sugerir melhorias
+* enviar pull requests
 
 ---
 
 # 👩‍🎓 Autora
 
 **Juliana Pelozo Pacheco**
+**Carolina Maria dos Santos**
+**Luiz Felipe Moraes Santos**
+**Maria Clara Varjão**
+**Pérola Luly**
+**Saulo de Lucena**
+**Saulo Monteiro**
 Estudante de Análise e Desenvolvimento de Sistemas — Faculdade Senac
 
 Projeto desenvolvido para a disciplina de Cloud Computing.
@@ -286,7 +359,7 @@ Projeto desenvolvido para a disciplina de Cloud Computing.
 
 # 📄 Licença
 
-MIT License.
+Este projeto está sob a licença MIT.
 
 ---
 
@@ -295,10 +368,11 @@ MIT License.
 * Microsoft Azure for Students
 * Comunidade Open Source
 * Ecossistema Python + Flask
-* Inspiração estética lunar e meditativa 🌙
+* Bootstrap
+* Chart.js
 
 ---
 
-# ✨ Lumni
+# 🌙 Lumni
 
 > *Entender seus próprios padrões é o primeiro passo para o equilíbrio.*
